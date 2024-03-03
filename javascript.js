@@ -35,4 +35,37 @@ function playSingleRound(playerSelection, computerSelection) {
         return 'Please draw an approved weapon! We only fight with rock, paper or scissors!'
     }
 }
-console.log(playSingleRound())
+
+function playGame() {
+    let playerScore = parseInt(0);
+    let computerScore = parseInt(0);
+    keepScore = function () {
+        let roundResult = playSingleRound()
+        console.log(roundResult)
+        if (roundResult.slice(0,8) === 'You win!') {
+        playerScore = ++playerScore
+        console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+    } else if (roundResult.slice(0,8) === 'You lose') {
+        computerScore = ++computerScore
+        console.log('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+    } else {
+        console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+    }
+    }
+
+
+keepScore()
+keepScore()
+keepScore()
+keepScore()
+keepScore()
+
+if (playerScore > computerScore) {
+    console.log ('Congratulations! You beat the computer!')
+    } else if (playerScore < computerScore) {
+        console.log ('Don\'t worry! You\'ll do better next time!')
+    } else {
+        console.log ('Looks like a tie this time!')
+    }
+}
+playGame()
