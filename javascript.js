@@ -43,25 +43,24 @@ function playGame() {
         let roundResult = playSingleRound()
         console.log(roundResult)
         if (roundResult.slice(0,8) === 'You win!') {
-        playerScore = ++playerScore
-        console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-    } else if (roundResult.slice(0,8) === 'You lose') {
-        computerScore = ++computerScore
-        console.log('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-    } else {
-        console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-    }
-    }
+            playerScore = ++playerScore
+            console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+        } else if (roundResult.slice(0,8) === 'You lose') {
+            computerScore = ++computerScore
+            console.log('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+        } else {
+            console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
+        }
+        }
 
+    keepScore()
+    keepScore()
+    keepScore()
+    keepScore()
+    keepScore()
 
-keepScore()
-keepScore()
-keepScore()
-keepScore()
-keepScore()
-
-if (playerScore > computerScore) {
-    console.log ('Congratulations! You beat the computer!')
+    if (playerScore > computerScore) {
+        console.log ('Congratulations! You beat the computer!')
     } else if (playerScore < computerScore) {
         console.log ('Don\'t worry! You\'ll do better next time!')
     } else {
