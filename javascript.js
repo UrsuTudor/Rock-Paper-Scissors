@@ -14,40 +14,50 @@ function getComputerChoice() {
 
 const buttons = document.querySelectorAll('button');
 
-let playerSelectionGlobal; 
+let playerSelectionGlobal; //made it a global value so I could easily access it with playSingleRound(); trying to add event listeners inside the function to encase every 
+                           //bit of code inside didn't work
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         playerSelectionGlobal = button.textContent
         playSingleRound()
     });
-})
+}) //makes buttons get playerSelection and play a round
 
 function playSingleRound(playerSelection, computerSelection) {
     playerSelection = playerSelectionGlobal;
-
     computerSelection = getComputerChoice();
 
     console.log('Computer: ' + computerSelection)
+    
+    const gameData = document.querySelector('#results')
+    
+    playersChoices.textContent = 'Player: ' + playerSelection + ' ' + 'Computer: ' + computerSelection
 
     if (playerSelection === computerSelection) {
-        console.log ('Tie!')
+        roundResult.textContent = 'Tie!'
     } else if (playerSelection === 'Rock' && computerSelection === 'Scissors') {
-         console.log ('You win! Rock beats Scissors!')
+        roundResult.textContent = 'You win! Rock beats Scissors!'
     } else if (playerSelection === 'Rock' && computerSelection === 'Paper') {
-         console.log ('You lose! Paper beats Rock!')
+        roundResult.textContent = 'You lose! Paper beats Rock!'
     } else if (playerSelection === 'Paper' && computerSelection === 'Scissors') {
-         console.log('You lose! Scissors beat Paper!')
+        roundResult.textContent ='You lose! Scissors beat Paper!'
     } else if (playerSelection === 'Paper' && computerSelection === 'Rock') {
-         console.log('You win! Paper beats Rock!')
+        roundResult.textContent ='You win! Paper beats Rock!'
     } else if (playerSelection === 'Scissors' && computerSelection === 'Rock') {
-         console.log('You lose! Rock beats Scissors!')
+        roundResult.textContent ='You lose! Rock beats Scissors!'
     } else if (playerSelection === 'Scissors' && computerSelection === 'Paper') {
-         console.log('You win! Scissors beat Paper!')
-    } else {
-         console.log('Please draw an approved weapon! We only fight with Rock, Paper or Scissors!')
-    }
+        roundResult.textContent ='You win! Scissors beat Paper!'
+    } 
+    gameData.appendChild(playersChoices)
+    gameData.appendChild(roundResult)
 }
+const playersChoices = document.createElement('div')
+const roundResult = document.createElement('div')
+
+
+
+
 
 
 
