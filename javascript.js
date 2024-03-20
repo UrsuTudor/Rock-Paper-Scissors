@@ -21,16 +21,19 @@ buttons.forEach((button) => {
     button.addEventListener('click', () => {
         playerSelectionGlobal = button.textContent
         playSingleRound()
+        keepScore()
     });
 }) //makes buttons get playerSelection and play a round
+
+const gameData = document.querySelector('#results')
+const playersChoices = document.createElement('div')
+const roundResult = document.createElement('div')
 
 function playSingleRound(playerSelection, computerSelection) {
     playerSelection = playerSelectionGlobal;
     computerSelection = getComputerChoice();
 
     console.log('Computer: ' + computerSelection)
-    
-    const gameData = document.querySelector('#results')
     
     playersChoices.textContent = 'Player: ' + playerSelection + ' ' + 'Computer: ' + computerSelection
 
@@ -52,34 +55,26 @@ function playSingleRound(playerSelection, computerSelection) {
     gameData.appendChild(playersChoices)
     gameData.appendChild(roundResult)
 }
-const playersChoices = document.createElement('div')
-const roundResult = document.createElement('div')
 
+let playerScore = parseInt(0);
+let computerScore = parseInt(0);
+const score = document.createElement('div')
 
-
-
-
-
+keepScore = function () {
+    if (roundResult.textContent.slice(0,8) === 'You win!') {
+        playerScore = ++playerScore
+        score.textContent = 'Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore
+    } else if (roundResult.textContent.slice(0,8) === 'You lose') {
+        computerScore = ++computerScore
+        score.textContent = 'Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore
+    } else {
+        score.textContent = 'Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore
+    }
+    gameData.appendChild(score)
+}
 
 function playGame() {
-    let playerScore = parseInt(0);
-    let computerScore = parseInt(0);
-    keepScore = function () {
-        let roundResult = playSingleRound() //this ensures the keepScore() function gets a new roundResult value by calling playSingleRound() every time it is ran
-        console.log(roundResult)
-        if (roundResult.slice(0,8) === 'You win!') {
-            playerScore = ++playerScore
-            console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-        } else if (roundResult.slice(0,8) === 'You lose') {
-            computerScore = ++computerScore
-            console.log('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-        } else {
-            console.log ('Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore)
-        }
-        }
-
     //5 keeps scores
-
     if (playerScore > computerScore) {
         console.log ('Congratulations! You beat the computer!')
     } else if (playerScore < computerScore) {
