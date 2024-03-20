@@ -12,11 +12,24 @@ function getComputerChoice() {
     }
 }
 
+const buttons = document.querySelectorAll('button');
+
+
+buttons.forEach((button) => {
+    let playerSelection
+    button.addEventListener('click', () => {
+        playerSelection = button.textContent
+    })
+    return playerSelection
+})
+
 function playSingleRound(playerSelection, computerSelection) {
     computerSelection = getComputerChoice();
-    console.log(computerSelection)
+    console.log('Computer: ' + computerSelection)
+
     let playerChoice = prompt('Choose your weapon!');
     playerSelection = playerChoice.toLowerCase();
+
     if (playerSelection === computerSelection) {
         return 'Tie!'
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
@@ -40,7 +53,7 @@ function playGame() {
     let playerScore = parseInt(0);
     let computerScore = parseInt(0);
     keepScore = function () {
-        let roundResult = playSingleRound()
+        let roundResult = playSingleRound() //this ensures the keepScore() function gets a new roundResult value by calling playSingleRound() every time it is ran
         console.log(roundResult)
         if (roundResult.slice(0,8) === 'You win!') {
             playerScore = ++playerScore
@@ -53,11 +66,7 @@ function playGame() {
         }
         }
 
-    keepScore()
-    keepScore()
-    keepScore()
-    keepScore()
-    keepScore()
+    //5 keeps scores
 
     if (playerScore > computerScore) {
         console.log ('Congratulations! You beat the computer!')
@@ -68,3 +77,4 @@ function playGame() {
     }
 }
 playGame()
+
