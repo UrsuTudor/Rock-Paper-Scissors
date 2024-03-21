@@ -16,7 +16,7 @@ const gameData = document.querySelector('#results'); //main container
 const playerOptionBtns = document.querySelectorAll('.playerOption');
 const playersChoices = document.createElement('div') ;
 const roundResult = document.createElement('div');
-
+const gameEndMsg = document.createElement('div')
 const playBtn = document.querySelector('#play');
 playerOptionBtns.forEach(button => button.disabled = true);
 playBtn.disabled = false;
@@ -24,31 +24,40 @@ playBtn.disabled = false;
 playBtn.addEventListener('click', () => {
     playerOptionBtns.forEach(button => button.disabled = false)
     playBtn.disabled = true
+    if (gameEndMsg.textContent == 'You win!' || gameEndMsg.textContent == 'You lose!') {
+        gameEndMsg.textContent = '';
+    }
 }) 
-
-let roundCount = 0
-
-let playerSelectionGlobal; //made it a global value so I could easily access it with playSingleRound(); trying to add event listeners inside the function to encase every 
-                           //bit of code inside didn't work
 
 playerOptionBtns.forEach((button) => {
     button.addEventListener('click', () => {
         playerSelectionGlobal = button.textContent;
         playSingleRound();
         keepScore();
-        
-        if (roundCount < 4) {
-            roundCount++;
-            console.log(roundCount);
-        } else if (roundCount == 4) {
-            playerOptionBtns.forEach(button => button.disabled = true)
+        if (playerScore == 5 ) {
+            playerScore = 0;
+            computerScore = 0; 
+            playerOptionBtns.forEach(button => button.disabled = true);
             playBtn.disabled = false;
             playBtn.textContent = 'Play Again';
+            gameEndMsg.textContent = 'You win!';
+            gameData.appendChild(gameEndMsg)
+        } else if (computerScore == 5){
+            playerScore = 0;
+            computerScore = 0; 
+            playerOptionBtns.forEach(button => button.disabled = true);
+            playBtn.disabled = false;
+            playBtn.textContent = 'Play Again';
+            gameEndMsg.textContent = 'You lose!';
+            gameData.appendChild(gameEndMsg)
         }
-        
     });
 }) //makes playerOptionBtns get playerSelection and play a round
 
+let roundCount = 0
+
+let playerSelectionGlobal; //made it a global value so I could easily access it with playSingleRound(); trying to add event listeners inside the function to encase every 
+                           //bit of code inside didn't work
 
 function playSingleRound(playerSelection, computerSelection) {
     playerSelection = playerSelectionGlobal;
@@ -90,6 +99,7 @@ keepScore = function () {
     } else {
         score.textContent = 'Player score:' + playerScore + ';' + ' ' + 'Computer score:' + computerScore
     }
+    
     gameData.appendChild(score)
 }
 
