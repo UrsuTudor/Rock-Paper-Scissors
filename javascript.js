@@ -12,30 +12,47 @@ function getComputerChoice() {
     }
 }
 
-const buttons = document.querySelectorAll('button');
+const gameData = document.querySelector('#results'); //main container
+const playerOptionBtns = document.querySelectorAll('.playerOption');
+const playersChoices = document.createElement('div') ;
+const roundResult = document.createElement('div');
+
+const playBtn = document.querySelector('#play');
+playerOptionBtns.forEach(button => button.disabled = true);
+playBtn.disabled = false;
+
+playBtn.addEventListener('click', () => {
+    playerOptionBtns.forEach(button => button.disabled = false)
+    playBtn.disabled = true
+}) 
+
+let roundCount = 0
 
 let playerSelectionGlobal; //made it a global value so I could easily access it with playSingleRound(); trying to add event listeners inside the function to encase every 
                            //bit of code inside didn't work
 
-buttons.forEach((button) => {
+playerOptionBtns.forEach((button) => {
     button.addEventListener('click', () => {
-        playerSelectionGlobal = button.textContent
-        playSingleRound()
-        keepScore()
+        playerSelectionGlobal = button.textContent;
+        playSingleRound();
+        keepScore();
+        
+        if (roundCount < 4) {
+            roundCount++;
+            console.log(roundCount);
+        } else if (roundCount == 4) {
+            playerOptionBtns.forEach(button => button.disabled = true)
+            playBtn.disabled = false;
+            playBtn.textContent = 'Play Again';
+        }
+        
     });
-}) //makes buttons get playerSelection and play a round
+}) //makes playerOptionBtns get playerSelection and play a round
 
-const gameData = document.querySelector('#results')
-const playersChoices = document.createElement('div')
-const roundResult = document.createElement('div')
 
 function playSingleRound(playerSelection, computerSelection) {
     playerSelection = playerSelectionGlobal;
     computerSelection = getComputerChoice();
-
-    console.log('Computer: ' + computerSelection)
-    
-    playersChoices.textContent = 'Player: ' + playerSelection + ' ' + 'Computer: ' + computerSelection
 
     if (playerSelection === computerSelection) {
         roundResult.textContent = 'Tie!'
@@ -52,13 +69,16 @@ function playSingleRound(playerSelection, computerSelection) {
     } else if (playerSelection === 'Scissors' && computerSelection === 'Paper') {
         roundResult.textContent ='You win! Scissors beat Paper!'
     } 
-    gameData.appendChild(playersChoices)
-    gameData.appendChild(roundResult)
+
+    playersChoices.textContent = 'Player: ' + playerSelection + ' ' + 'Computer: ' + computerSelection;
+
+    gameData.appendChild(playersChoices);
+    gameData.appendChild(roundResult);
 }
 
+const score = document.createElement('div')
 let playerScore = parseInt(0);
 let computerScore = parseInt(0);
-const score = document.createElement('div')
 
 keepScore = function () {
     if (roundResult.textContent.slice(0,8) === 'You win!') {
@@ -83,5 +103,3 @@ function playGame() {
         console.log ('Looks like a tie this time!')
     }
 }
-
-
